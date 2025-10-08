@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="20%" src=".github/assets/logo.png" alt="tailwind-variants" />
+  <img width="20%" src=".github/assets/logo.png" alt="styled-tailwind-variants" />
   <h1 align="center">styled-tailwind-variants</h1>
 </p>
 <p align="center">
