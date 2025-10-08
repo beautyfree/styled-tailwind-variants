@@ -27,10 +27,10 @@ yarn add styled-tailwind-variants tailwind-variants tailwind-merge
 import styled from 'styled-tailwind-variants';
 
 // String syntax
-const Box = styled.div("p-4 bg-white rounded-lg shadow-md");
+const UIBox = styled.div("p-4 bg-white rounded-lg shadow-md");
 
 // Object syntax with variants
-const Button = styled.button({
+const UIButton = styled.button({
   base: "px-4 py-2 rounded font-medium transition-colors",
   variants: {
     color: {
@@ -51,15 +51,15 @@ const Button = styled.button({
 });
 
 // Template literal syntax
-const Card = styled.div`bg-white shadow-lg p-6 rounded-xl`;
+const UICard = styled.div`bg-white shadow-lg p-6 rounded-xl`;
 
 // Usage
 function App() {
   return (
     <div>
-      <Box>Simple box</Box>
-      <Button color="secondary" size="lg">Click me</Button>
-      <Card>Card content</Card>
+      <UIBox>Simple box</UIBox>
+      <UIButton color="secondary" size="lg">Click me</UIButton>
+      <UICard>Card content</UICard>
     </div>
   );
 }
@@ -71,12 +71,12 @@ function App() {
 
 #### String Syntax
 ```tsx
-const Component = styled.div("base-classes");
+const UIComponent = styled.div("base-classes");
 ```
 
 #### Object Syntax
 ```tsx
-const Component = styled.div({
+const UIComponent = styled.div({
   base: "base-classes",
   variants: {
     variantName: {
@@ -92,7 +92,7 @@ const Component = styled.div({
 
 #### Template Literal Syntax
 ```tsx
-const Component = styled.div`base-classes`;
+const UIComponent = styled.div`base-classes`;
 ```
 
 ### Component Wrapping
@@ -115,7 +115,7 @@ All styled components accept the following props:
 - Variant props based on your configuration
 
 ```tsx
-const Button = styled.button({
+const UIButton = styled.button({
   base: "px-4 py-2 rounded",
   variants: {
     color: {
@@ -126,16 +126,16 @@ const Button = styled.button({
 });
 
 // Usage with variant props
-<Button color="primary" className="mt-4" as="div">
+<UIButton color="primary" className="mt-4" as="div">
   Click me
-</Button>
+</UIButton>
 ```
 
 ### Advanced Features
 
 #### Compound Variants
 ```tsx
-const Button = styled.button({
+const UIButton = styled.button({
   base: "px-4 py-2 rounded",
   variants: {
     color: {
@@ -158,7 +158,7 @@ const Button = styled.button({
 
 #### Boolean Variants
 ```tsx
-const Card = styled.div({
+const UICard = styled.div({
   base: "p-4 rounded-lg",
   variants: {
     elevated: {
@@ -171,7 +171,7 @@ const Card = styled.div({
 });
 
 // Usage
-<Card elevated interactive>Content</Card>
+<UICard elevated interactive>Content</UICard>
 ```
 
 ## TypeScript Support
@@ -179,7 +179,7 @@ const Card = styled.div({
 The library provides full TypeScript support with proper type inference:
 
 ```tsx
-const Button = styled.button({
+const UIButton = styled.button({
   base: "px-4 py-2",
   variants: {
     color: {
@@ -190,8 +190,8 @@ const Button = styled.button({
 });
 
 // TypeScript will infer the correct props
-<Button color="primary" /> // ✅ Valid
-<Button color="invalid" /> // ❌ TypeScript error
+<UIButton color="primary" /> // ✅ Valid
+<UIButton color="invalid" /> // ❌ TypeScript error
 ```
 
 ## Development Setup
