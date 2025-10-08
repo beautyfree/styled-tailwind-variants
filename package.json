@@ -1,0 +1,56 @@
+{
+  "name": "styled-tailwind-variants",
+  "version": "1.0.4",
+  "description": "A styled-components-like wrapper around tailwind-variants",
+  "author": "Alexey Elizarov <alex.elizarov1@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/beautyfree/styled-tailwind-variants.git"
+  },
+  "keywords": [
+    "css-in-js",
+    "react",
+    "styled-components",
+    "tailwind",
+    "tailwind-variants",
+    "tailwindcss",
+    "typescript"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf dist",
+    "dev": "tsup --watch",
+    "type-check": "tsc --noEmit",
+    "prepublishOnly": "pnpm run build"
+  },
+  "dependencies": {
+    "clsx": "^2.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "tailwind-variants": ">=3.0.0",
+    "tailwind-merge": ">=3.0.0",
+    "tailwindcss": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "react": "^18.2.0",
+    "tailwind-variants": "^3.1.1",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  }
+}
