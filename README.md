@@ -194,6 +194,57 @@ const Button = styled.button({
 <Button color="invalid" /> // ❌ TypeScript error
 ```
 
+## Development Setup
+
+### IntelliSense Setup (Optional)
+
+To enable autocompletion for Tailwind CSS classes in your styled components, you can configure your editor:
+
+#### VSCode
+
+If you're using **VSCode** with the **TailwindCSS IntelliSense Extension**, add the following to your `settings.json`:
+
+```json
+{
+  "tailwindCSS.experimental.classRegex": [
+    [
+      "styled\\.[a-zA-Z]+`([^`]*)`",
+      "([^`]*)"
+    ],
+    [
+      "styled\\.[a-zA-Z]+\\([\"'`]([^\"'`]*)[\"'`]\\)",
+      "([^\"'`]*)"
+    ],
+    [
+      "styled\\.[a-zA-Z]+\\(\\{[^}]*base:\\s*[\"'`]([^\"'`]*)[\"'`]",
+      "([^\"'`]*)"
+    ]
+  ]
+}
+```
+
+This will enable autocompletion for:
+- String syntax: `styled.div("bg-blue-500 hover:bg-blue-600")`
+- Template literal syntax: `styled.div`bg-blue-500 hover:bg-blue-600``
+- Object syntax: `styled.div({ base: "bg-blue-500 hover:bg-blue-600" })`
+
+### Prettier Plugin Setup (Optional)
+
+If you're using `prettier-plugin-tailwindcss` to sort your class names, add `styled` to the list of functions that should be sorted:
+
+```javascript
+// prettier.config.js
+module.exports = {
+  plugins: [require('prettier-plugin-tailwindcss')],
+  tailwindFunctions: ['styled']
+}
+```
+
+This will automatically sort Tailwind classes in:
+- `styled.div("px-4 py-2 bg-blue-500 text-white")`
+- `styled.div`px-4 py-2 bg-blue-500 text-white``
+- `styled.div({ base: "px-4 py-2 bg-blue-500 text-white" })`
+
 ## Performance
 
 This library adds minimal performance overhead compared to native `tailwind-variants`:
@@ -229,48 +280,6 @@ This library adds minimal performance overhead compared to native `tailwind-vari
 - Mobile devices with limited performance
 
 The minimal overhead is usually worth the significant improvement in developer experience and code maintainability.
-
-## Development Setup
-
-### IntelliSense Setup (Optional)
-
-To enable autocompletion for Tailwind CSS classes in your styled components, you can configure your editor:
-
-#### VSCode
-
-If you're using **VSCode** with the **TailwindCSS IntelliSense Extension**, add the following to your `settings.json`:
-
-```json
-{
-  "tailwindCSS.experimental.classRegex": [
-    ["styled\\.[a-zA-Z]+\\([\"'`]([^\"'`]*)[\"'`]\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
-    ["styled\\.[a-zA-Z]+`([^`]*)`", "`([^`]*)`"],
-    ["styled\\.[a-zA-Z]+\\(\\{[^}]*base:\\s*[\"'`]([^\"'`]*)[\"'`]", "[\"'`]([^\"'`]*).*?[\"'`]"]
-  ]
-}
-```
-
-This will enable autocompletion for:
-- String syntax: `styled.div("bg-blue-500 hover:bg-blue-600")`
-- Template literal syntax: `styled.div`bg-blue-500 hover:bg-blue-600``
-- Object syntax: `styled.div({ base: "bg-blue-500 hover:bg-blue-600" })`
-
-### Prettier Plugin Setup (Optional)
-
-If you're using `prettier-plugin-tailwindcss` to sort your class names, add `styled` to the list of functions that should be sorted:
-
-```javascript
-// prettier.config.js
-module.exports = {
-  plugins: [require('prettier-plugin-tailwindcss')],
-  tailwindFunctions: ['styled']
-}
-```
-
-This will automatically sort Tailwind classes in:
-- `styled.div("px-4 py-2 bg-blue-500 text-white")`
-- `styled.div`px-4 py-2 bg-blue-500 text-white``
-- `styled.div({ base: "px-4 py-2 bg-blue-500 text-white" })`
 
 ## Contributing
 
