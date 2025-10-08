@@ -1,6 +1,20 @@
-# Styled Tailwind Variants
-
-A styled-components-like wrapper around [tailwind-variants](https://www.tailwind-variants.org/) that provides a familiar API for creating styled React components with Tailwind CSS.
+<p align="center">
+  <img width="20%" src=".github/assets/logo.png" alt="tailwind-variants" />
+  <h1 align="center">styled-tailwind-variants</h1>
+</p>
+<p align="center">
+  A styled-components-like wrapper around <a href="https://www.tailwind-variants.org/">tailwind-variants</a> that provides a familiar API for creating styled React components with Tailwind CSS.
+  <br><br>
+  <a href="https://www.npmjs.com/package/styled-tailwind-variants">
+    <img src="https://img.shields.io/npm/dm/styled-tailwind-variants.svg?style=flat-round" alt="npm downloads">
+  </a>
+  <a href="https://www.npmjs.com/package/styled-tailwind-variants">
+    <img alt="NPM Version" src="https://badgen.net/npm/v/styled-tailwind-variants" />
+  </a>
+  <a href="https://github.com/beautyfree/styled-tailwind-variants/blob/main/LICENSE">
+    <img src="https://img.shields.io/npm/l/styled-tailwind-variants?style=flat" alt="License">
+  </a>
+</p>
 
 ## Features
 
