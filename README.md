@@ -40,6 +40,9 @@ yarn add styled-tailwind-variants tailwind-variants tailwind-merge
 ```tsx
 import styled from 'styled-tailwind-variants';
 
+// Template literal syntax
+const UICard = styled.div`bg-white shadow-lg p-6 rounded-xl`;
+
 // String syntax
 const UIBox = styled.div("p-4 bg-white rounded-lg shadow-md");
 
@@ -64,9 +67,6 @@ const UIButton = styled.button({
   }
 });
 
-// Template literal syntax
-const UICard = styled.div`bg-white shadow-lg p-6 rounded-xl`;
-
 // Usage
 function App() {
   return (
@@ -82,6 +82,11 @@ function App() {
 ## API Reference
 
 ### Basic Usage
+
+#### Template Literal Syntax
+```tsx
+const UIComponent = styled.div`base-classes`;
+```
 
 #### String Syntax
 ```tsx
@@ -102,11 +107,6 @@ const UIComponent = styled.div({
     variantName: "option1"
   }
 });
-```
-
-#### Template Literal Syntax
-```tsx
-const UIComponent = styled.div`base-classes`;
 ```
 
 ### Component Wrapping
