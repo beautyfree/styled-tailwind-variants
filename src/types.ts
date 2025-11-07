@@ -1,38 +1,25 @@
-import { ComponentType, ReactNode } from 'react'
+import { ComponentType } from 'react'
 
-// Import types directly from tailwind-variants
-import type {
-  ClassValue,
-  OmitUndefined,
-  StringToBoolean,
-  TV,
-  TVVariants,
-  TVCompoundVariants,
-  TVDefaultVariants,
-  TVProps,
-  TVReturnType,
-  VariantProps as TVVariantProps,
-} from 'tailwind-variants'
+import { TV, StringToBoolean, ClassValue } from 'tailwind-variants'
 
-// Re-export the imported types
 export type {
   ClassValue,
   OmitUndefined,
   StringToBoolean,
   TV,
-  TVVariants,
   TVCompoundVariants,
   TVDefaultVariants,
   TVProps,
   TVReturnType,
-  TVVariantProps,
+  VariantProps as TVVariantProps,
+  TVVariants,
+} from 'tailwind-variants'
+
+type TVConfig = Omit<Parameters<TV>[0], 'slots' | 'compoundSlots'>
+
+type VariantProps<T extends TVConfig> = T extends {
+  variants: infer V
 }
-
-// Use official config type for full compatibility including slots
-export type TVConfig = Omit<Parameters<TV>[0], 'slots' | 'compoundSlots'>
-
-// Create props type from variants using our own implementation
-export type VariantProps<T extends TVConfig> = T extends { variants: infer V }
   ? V extends Record<string, any>
     ? {
         [K in keyof V]?: StringToBoolean<keyof V[K]> | undefined
@@ -40,18 +27,17 @@ export type VariantProps<T extends TVConfig> = T extends { variants: infer V }
     : {}
   : {}
 
-// Extract variant keys (for backwards compatibility)
-export type VariantKeys<T extends TVConfig> = T extends { variants: infer V }
+type VariantKeys<T extends TVConfig> = T extends {
+  variants: infer V
+}
   ? V extends Record<string, any>
     ? keyof V
     : never
   : never
 
-// Extract variant values for a specific key (for backwards compatibility)
-export type VariantValues<
-  T extends TVConfig,
-  K extends VariantKeys<T>
-> = T extends { variants: infer V }
+type VariantValues<T extends TVConfig, K extends VariantKeys<T>> = T extends {
+  variants: infer V
+}
   ? V extends Record<string, any>
     ? K extends keyof V
       ? V[K] extends Record<string, any>
@@ -61,43 +47,65 @@ export type VariantValues<
     : never
   : never
 
-// Base props for styled components
-export interface StyledComponentProps {
+interface StyledComponentProps {
   className?: string
-  children?: ReactNode
+
   as?: keyof JSX.IntrinsicElements | ComponentType<any>
 }
 
-// Styled component type
-export type StyledComponent<TConfig extends TVConfig = TVConfig> =
-  ComponentType<StyledComponentProps & VariantProps<TConfig> & any>
+type KnownTarget = keyof JSX.IntrinsicElements | ComponentType<any>
 
-// Styled function that accepts template literals, objects, or strings
-export type StyledFunction<TConfig extends TVConfig = TVConfig> = {
-  (config: TConfig): StyledComponent<TConfig>
-  (base: ClassValue): StyledComponent<{ base: ClassValue }>
-  (strings: TemplateStringsArray, ...values: any[]): StyledComponent<{
-    base: ClassValue
-  }>
+type StyledComponent<
+  Target extends KnownTarget,
+  TConfig extends TVConfig = TVConfig
+> = ComponentType<
+  StyledComponentProps &
+    VariantProps<TConfig> &
+    (Target extends ComponentType<infer P>
+      ? P
+      : Target extends keyof JSX.IntrinsicElements
+      ? JSX.IntrinsicElements[Target]
+      : {})
+>
+
+type StyledFunction<Target extends KnownTarget> = {
+  (config: TVConfig): StyledComponent<Target, typeof config>
+
+  (base: ClassValue): StyledComponent<Target, { base: ClassValue }>
+
+  (strings: TemplateStringsArray, ...values: any[]): StyledComponent<
+    Target,
+    { base: ClassValue }
+  >
 }
 
-// HTML tag names
-export type HTMLTags = keyof JSX.IntrinsicElements
+type HTMLTags = keyof JSX.IntrinsicElements
 
-// Styled tags interface
-export type StyledTags = {
-  [K in HTMLTags]: StyledFunction
+type StyledTags = {
+  [K in HTMLTags]: StyledFunction<K>
 }
 
-// Main styled interface
-export interface Styled extends StyledTags {
-  <TComponent extends ComponentType<any>>(component: TComponent): StyledFunction
+interface Styled extends StyledTags {
+  <Target extends KnownTarget>(component: Target): StyledFunction<Target>
 }
 
-// Template literal parsing helper
-export type TemplateLiteralConfig = {
-  base: ClassValue
-}
+declare function createStyled(): Styled
 
-// Union of all possible config types
-export type StyledConfig = TVConfig | string | TemplateStringsArray
+declare const styled: Styled
+
+export {
+  type HTMLTags,
+  type KnownTarget,
+  type Styled,
+  type StyledComponent,
+  type StyledComponentProps,
+  type StyledFunction,
+  type StyledTags,
+  type TVConfig,
+  type VariantKeys,
+  type VariantProps,
+  type VariantValues,
+  createStyled,
+  styled as default,
+  styled,
+}

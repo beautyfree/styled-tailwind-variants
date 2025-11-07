@@ -1,4 +1,4 @@
-import React, { ComponentType, forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 import { tv } from 'tailwind-variants'
 import { clsx } from 'clsx'
 import type {
@@ -8,6 +8,7 @@ import type {
   StyledComponentProps,
   TVConfig,
   HTMLTags,
+  KnownTarget,
 } from './types'
 
 // Parse template literal to extract base classes
@@ -22,10 +23,10 @@ function parseTemplateLiteral(
 }
 
 // Create a styled component factory
-function createStyledComponent<TConfig extends Omit<TVConfig, 'slots'>>(
-  config: TConfig,
-  element: keyof JSX.IntrinsicElements | ComponentType<any>
-): StyledComponent<TConfig> {
+function createStyledComponent<
+  Target extends KnownTarget,
+  TConfig extends Omit<TVConfig, 'slots'>
+>(config: TConfig, element: Target): StyledComponent<Target, TConfig> {
   const tvFunction = tv(config)
 
   return forwardRef<any, StyledComponentProps & any>((props, ref) => {
@@ -78,13 +79,13 @@ function createStyledComponent<TConfig extends Omit<TVConfig, 'slots'>>(
         children
       )
     }
-  }) as StyledComponent<TConfig>
+  }) as StyledComponent<Target, TConfig>
 }
 
 // Create styled function for a specific element
-function createStyledFunction<
-  TElement extends keyof JSX.IntrinsicElements | ComponentType<any>
->(element: TElement): StyledFunction {
+function createStyledFunction<TElement extends KnownTarget>(
+  element: TElement
+): StyledFunction<TElement> {
   return function styledFunction(configOrStrings: any, ...values: any[]) {
     // Handle different input types
     let tvConfig: TVConfig
@@ -106,15 +107,15 @@ function createStyledFunction<
       throw new Error('Invalid configuration provided to styled function')
     }
 
-    return createStyledComponent(tvConfig, element)
-  } as StyledFunction
+    return createStyledComponent<TElement, typeof tvConfig>(tvConfig, element)
+  } as StyledFunction<TElement>
 }
 
 // Create the main styled factory
 export function createStyled(): Styled {
-  const styled = function <TComponent extends ComponentType<any>>(
+  const styled = function <TComponent extends KnownTarget>(
     component: TComponent
-  ): StyledFunction {
+  ): StyledFunction<TComponent> {
     return createStyledFunction(component)
   } as Styled
 

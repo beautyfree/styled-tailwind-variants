@@ -21,6 +21,7 @@ export type {
   TVReturnType,
   HTMLTags,
   StyledTags,
+  KnownTarget,
 } from './types'
 
 // Default export
