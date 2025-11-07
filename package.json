@@ -1,6 +1,6 @@
 {
   "name": "styled-tailwind-variants",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "A styled-components-like wrapper around tailwind-variants",
   "author": "Alexey Elizarov <alex.elizarov1@gmail.com>",
   "license": "MIT",
